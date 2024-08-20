@@ -717,6 +717,8 @@ public abstract class JuaAPI {
     public static int methodInvoke(Lua L, Method method, @Nullable Object obj, Object[] objects) {
         Object ret;
         try {
+            if (Modifier.isPublic(method.getModifiers()))
+                method.setAccessible(true);
             ret = method.invoke(obj, objects);
         } catch (IllegalAccessException e) {
             return L.error(e);
